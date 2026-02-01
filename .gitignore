@@ -104,6 +104,11 @@ fabric.properties
 hs_err_pid*
 replay_pid*
 
+### Gradle ###
+.gradle
+**/build/
+!src/**/build/
+
 ### macOS ###
 # General
 .DS_Store
