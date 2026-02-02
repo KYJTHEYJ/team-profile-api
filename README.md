@@ -21,3 +21,10 @@
 ## RDS 보안그룹 설정
 <img width="913" height="163" alt="image" src="https://github.com/user-attachments/assets/7cf80147-bf48-4a67-bf63-18da3bb47e98" />
 
+## Github Action 성공
+
+
+## EC2 터미널 이미지
+<img width="1161" height="44" alt="image" src="https://github.com/user-attachments/assets/21d28de3-293f-4294-9778-c48210946a6f" />
+
+
