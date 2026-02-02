@@ -146,6 +146,6 @@ Temporary Items
 application-*.yml
 
 ### env ###
-.env
+.env.*
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,java,intellij
