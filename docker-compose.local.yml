@@ -1,0 +1,20 @@
+services:
+  app:
+    build: .
+    image: team-profile-api-local:1.0.0
+    working_dir: /app
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=local
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY_ID=${AWS_SECRET_ACCESS_KEY_ID}
+      - AWS_REGION=ap-northeast-2
+    env_file:
+      - .env.local
+    networks:
+      - team-profile-api
+
+networks:
+  team-profile-api:
+    driver: bridge
