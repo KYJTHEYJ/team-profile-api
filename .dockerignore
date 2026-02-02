@@ -7,7 +7,6 @@ dist/
 .gitignore
 
 # enviorment
-.env
 .env.*
 *.pem
 *.key
