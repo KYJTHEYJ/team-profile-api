@@ -1,0 +1,18 @@
+# dependency
+target/
+dist/
+
+# git
+.git/
+.gitignore
+
+# enviorment
+.env.*
+*.pem
+*.key
+*.yml
+
+# IDE
+.idea/
+.vscode/
+*.swp
