@@ -1,6 +1,6 @@
 # Team-Profile
 - 팀원 정보 및 이미지 저장 API
-- AWS 연동
+- AWS 연동, Docker Compose 환경 로컬/운영 셋업
 
 # 접속 가능한 Public IP
 - 54.180.134.248
@@ -26,5 +26,6 @@
 
 ## EC2 터미널 이미지
 <img width="1161" height="44" alt="image" src="https://github.com/user-attachments/assets/21d28de3-293f-4294-9778-c48210946a6f" />
+
 
 
