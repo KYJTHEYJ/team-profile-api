@@ -1,10 +1,16 @@
 services:
   app:
-    image: ${DOCKER_USER}/team-profile-api:${IMAGE_TAG}
+    image: ${DOCKER_IMAGE}
     container_name: team-profile-api
     ports:
       - "8080:8080"
     environment:
       - SPRING_PROFILES_ACTIVE=prod
       - AWS_REGION=ap-northeast-2
-    restart: unless-stopped
+    restart: unless-stopped # 수동 중지 않는 한 항상 재시작
+    networks:
+      - team-profile-api-network
+
+networks:
+  team-profile-api-network:
+    driver: bridge
