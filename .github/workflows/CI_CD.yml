@@ -7,7 +7,7 @@ on:
 env:
   JAVA_VERSION: '21'
   AWS_REGION: ap-northeast-2
-  DOCKER_IMAGE: ${{ secrets.DOCKER_USERNAME }}/team-profile-api:${{ github.sha }}
+  DOCKER_IMAGE: ${{ secrets.DOCKER_USERNAME }}/team-profile-api:1.0.0
 
 jobs:
   build-and-deploy:
@@ -62,7 +62,7 @@ jobs:
       - name: Deploy via SSM
         run: |
           echo "Sending deployment command to EC2..."                                                                                                                                                                                                                                                                               
-          COMMAND_ID=$(aws ssm send-command --instance-ids ${{ steps.get-instance.outputs.instance_id }} --document-name "AWS-RunShellScript" --comment "Deploy from GitHub Actions" --parameters 'commands=["cd /home/ec2-user/team-profile-api","docker-compose -f docker-compose.prod.yml down || true","docker pull ${{ env.DOCKER_IMAGE }}","export IMAGE_TAG=${{ github.sha }} && docker-compose -f docker-compose.prod.yml up -d","docker image prune -f"]' --output text --query "Command.CommandId")
+          COMMAND_ID=$(aws ssm send-command --instance-ids ${{ steps.get-instance.outputs.instance_id }} --document-name "AWS-RunShellScript" --comment "Deploy from GitHub Actions" --parameters 'commands=["cd /home/ec2-user/team-profile-api","docker-compose -f docker-compose.prod.yml down || true","docker pull ${{ env.DOCKER_IMAGE }}","docker-compose -f docker-compose.prod.yml up -d","docker image prune -f"]' --output text --query "Command.CommandId")
           echo "Command ID: $COMMAND_ID"
           echo "Waiting for deployment to complete..."
           aws ssm wait command-executed --command-id $COMMAND_ID --instance-id ${{ steps.get-instance.outputs.instance_id }}
