@@ -83,7 +83,6 @@ jobs:
       # ===== EC2에 배포 (SSM) =====
       - name: Deploy via SSM
         run: |
-          IMAGE_TAG=${{ github.sha }}
           COMMAND_ID=$(aws ssm send-command \
             --instance-ids ${{ steps.get-instance.outputs.instance_id }} \
             --document-name "AWS-RunShellScript" \
@@ -92,7 +91,7 @@ jobs:
               "docker compose -f docker-compose.prod.yml down || true",
               "docker image prune -f",
               "echo DOCKER_USER=${{ secrets.DOCKER_USERNAME }} > .env.deploy",
-              "echo IMAGE_TAG=$IMAGE_TAG >> .env.deploy",
+              "echo IMAGE_TAG=${{ github.sha }} >> .env.deploy",
               "docker compose --env-file .env.deploy -f docker-compose.prod.yml up -d"
             ]' \
             --query "Command.CommandId" \
