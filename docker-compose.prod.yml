@@ -1,6 +1,6 @@
 services:
   app:
-    image: ${DOCKER_USER}/team-profile-api:1.0.0
+    image: ${DOCKER_USER}/team-profile-api:${IMAGE_TAG:-latest}
     container_name: team-profile-api
     ports:
       - "8080:8080"
