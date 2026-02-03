@@ -73,6 +73,13 @@ jobs:
           aws ec2 start-instances --instance-ids ${{ steps.get-instance.outputs.instance_id }}
           aws ec2 wait instance-running --instance-ids ${{ steps.get-instance.outputs.instance_id }}
 
+      # ===== EC2 메타데이터 hop limit 설정 =====
+      - name: Set metadata hop limit for Docker
+        run: |
+          aws ec2 modify-instance-metadata-options \
+            --instance-id ${{ steps.get-instance.outputs.instance_id }} \
+            --http-put-response-hop-limit 2
+
       # ===== EC2에 배포 (SSM) =====
       - name: Deploy via SSM
         run: |
