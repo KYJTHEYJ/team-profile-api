@@ -20,16 +20,17 @@ public class Member {
     @Column(length = 3, nullable = false)
     private Integer age;
 
+    @Enumerated(EnumType.STRING)
     @Column(length = 12, nullable = false)
-    private String mbti;
+    private Mbti mbti;
 
-    private Member(String name, Integer age, String mbti) {
+    private Member(String name, Integer age, Mbti mbti) {
         this.name = name;
         this.age = age;
         this.mbti = mbti;
     }
 
-    public static Member register(String name, Integer age, String mbti) {
+    public static Member register(String name, Integer age, Mbti mbti) {
         return new Member(name, age, mbti);
     }
 }

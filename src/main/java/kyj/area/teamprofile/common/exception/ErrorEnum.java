@@ -9,6 +9,7 @@ import static kyj.area.teamprofile.common.exception.Message.*;
 public enum ErrorEnum {
     //region "Member 관련 Error"
     ERR_NOT_FOUND_MEMBER(HttpStatus.NOT_FOUND, MSG_NOT_FOUND_MEMBER)
+    , ERR_NOT_FOUND_MBTI(HttpStatus.BAD_REQUEST, MSG_NOT_FOUND_MBTI)
     //endregion
 
     //region "Image 관련 Error"

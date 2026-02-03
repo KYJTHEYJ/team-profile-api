@@ -3,6 +3,7 @@ package kyj.area.teamprofile.common.exception;
 public class Message {
     //region 멤버 관련 이미지
     public static String MSG_NOT_FOUND_MEMBER = "멤버를 찾을 수 없습니다";
+    public static String MSG_NOT_FOUND_MBTI = "없는 MBTI를 입력 하셨습니다";
     //endregion
 
     //region 이미지 관련 메세지
