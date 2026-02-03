@@ -7,7 +7,7 @@ on:
 env:
   JAVA_VERSION: '21'
   AWS_REGION: ap-northeast-2
-  DOCKER_IMAGE: team-profile-api:${{ github.sha }}
+  DOCKER_IMAGE: ${{ secrets.DOCKER_USERNAME }}/team-profile-api:${{ github.sha }}
 
 jobs:
   build-and-deploy:
