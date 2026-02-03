@@ -4,6 +4,7 @@ import kyj.area.teamprofile.common.exception.ErrorEnum;
 import kyj.area.teamprofile.common.exception.ServiceErrorException;
 import kyj.area.teamprofile.domain.member.dto.*;
 import kyj.area.teamprofile.domain.member.entity.Image;
+import kyj.area.teamprofile.domain.member.entity.Mbti;
 import kyj.area.teamprofile.domain.member.entity.Member;
 import kyj.area.teamprofile.domain.member.repository.ImageRepository;
 import kyj.area.teamprofile.domain.member.repository.MemberRepository;
@@ -22,6 +23,10 @@ public class MemberService {
 
     @Transactional
     public CreateMemberResponse createMember(CreateMemberRequest request) {
+        if (request.mbti() == Mbti.UNKNOWN) {
+            throw new ServiceErrorException(ErrorEnum.ERR_NOT_FOUND_MBTI);
+        }
+
         Member member = Member.register(request.name(), request.age(), request.mbti());
         Member savedMember = memberRepository.save(member);
 
@@ -29,7 +34,7 @@ public class MemberService {
                 savedMember.getId()
                 , savedMember.getName()
                 , savedMember.getAge()
-                , savedMember.getMbti()
+                , savedMember.getMbti().name()
         );
     }
 
@@ -40,7 +45,7 @@ public class MemberService {
         return new SearchMemberResponse(
                 member.getName()
                 , member.getAge()
-                , member.getMbti()
+                , member.getMbti().name()
         );
     }
 
