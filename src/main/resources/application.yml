@@ -2,11 +2,6 @@ spring:
   application:
     name: team-profile
 
-  jackson:
-    datatype:
-      enum:
-        read-unknown-enum-values-using-default-value: true
-
 logging:
   level:
     root: info

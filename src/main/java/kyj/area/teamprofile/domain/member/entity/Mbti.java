@@ -1,6 +1,8 @@
 package kyj.area.teamprofile.domain.member.entity;
 
-import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import kyj.area.teamprofile.common.exception.ErrorEnum;
+import kyj.area.teamprofile.common.exception.ServiceErrorException;
 
 public enum Mbti {
     INTJ
@@ -18,6 +20,16 @@ public enum Mbti {
     , ESTJ
     , ESTP
     , ESFJ
-    , ESFP
-    , @JsonEnumDefaultValue UNKNOWN
+    , ESFP;
+
+    @JsonCreator
+    public static Mbti from(String value) {
+        for(Mbti mbti : Mbti.values()) {
+            if(mbti.name().equals(value)) {
+                return mbti;
+            }
+        }
+
+        throw new ServiceErrorException(ErrorEnum.ERR_NOT_FOUND_MBTI);
+    }
 }

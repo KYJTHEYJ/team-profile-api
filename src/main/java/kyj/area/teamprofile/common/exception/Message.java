@@ -16,5 +16,7 @@ public class Message {
 
     //region 서버 에러 관련
     public static String MSG_SERVER_ERROR = "서버 오류가 발생하였습니다";
+    public static String MSG_NOT_READABLE_VALUE = "잘못된 요청 값이 입력 되었습니다";
+    public static String MSG_DATA_INTEGRITY_VIOLENCE = "데이터 형식이 유효하지 않습니다";
     //endregion
 }

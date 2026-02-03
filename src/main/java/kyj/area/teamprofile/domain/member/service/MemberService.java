@@ -23,10 +23,6 @@ public class MemberService {
 
     @Transactional
     public CreateMemberResponse createMember(CreateMemberRequest request) {
-        if (request.mbti() == Mbti.UNKNOWN) {
-            throw new ServiceErrorException(ErrorEnum.ERR_NOT_FOUND_MBTI);
-        }
-
         Member member = Member.register(request.name(), request.age(), request.mbti());
         Member savedMember = memberRepository.save(member);
 
