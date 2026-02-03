@@ -6,11 +6,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import static kyj.area.teamprofile.common.exception.Message.MSG_SERVER_ERROR;
+import static kyj.area.teamprofile.common.exception.Message.*;
 
 @Slf4j
 @RestControllerAdvice
@@ -36,7 +37,20 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = DataIntegrityViolationException.class)
     public ResponseEntity<MainResponse<Void>> dataIntegrityViolationException(DataIntegrityViolationException e, HttpServletRequest request) {
         printBasicInfo(e.getMessage(), request, e);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(MainResponse.fail(HttpStatus.BAD_REQUEST.name(), e.getMessage()));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(MainResponse.fail(HttpStatus.BAD_REQUEST.name(), MSG_DATA_INTEGRITY_VIOLENCE));
+    }
+
+    @ExceptionHandler(value = HttpMessageNotReadableException.class)
+    public ResponseEntity<MainResponse<Void>> HttpMessageNotReadableException(HttpMessageNotReadableException e, HttpServletRequest request) {
+        printBasicInfo(e.getMessage(), request, e);
+
+        // Enum Json 역직렬화 시 에러 발생 처리 위함 (HttpMessageNotReadableException 이 래핑)
+        if(e.getCause().getCause() instanceof ServiceErrorException serviceErrorException) {
+            printBasicInfo(serviceErrorException.getMessage(), request, e);
+            return ResponseEntity.status(serviceErrorException.getStatus()).body(MainResponse.fail(serviceErrorException.getStatus().name(), serviceErrorException.getMessage()));
+        }
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(MainResponse.fail(HttpStatus.BAD_REQUEST.name(), MSG_NOT_READABLE_VALUE));
     }
 
     @ExceptionHandler(value = Exception.class)
