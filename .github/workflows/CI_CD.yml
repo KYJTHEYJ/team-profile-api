@@ -91,7 +91,8 @@ jobs:
               "cd /home/ec2-user/team-profile-api",
               "docker compose -f docker-compose.prod.yml down || true",
               "docker image prune -f",
-              "cat > .env.deploy <<EOF\nDOCKER_USER=${{ secrets.DOCKER_USERNAME }}\nIMAGE_TAG=$IMAGE_TAG\nEOF",
+              "echo DOCKER_USER=${{ secrets.DOCKER_USERNAME }} > .env.deploy",
+              "echo IMAGE_TAG=$IMAGE_TAG >> .env.deploy",
               "docker compose --env-file .env.deploy -f docker-compose.prod.yml up -d"
             ]' \
             --query "Command.CommandId" \
