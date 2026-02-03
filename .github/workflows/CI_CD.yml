@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v4
 
       # ===== JDK 21 설정 =====
-      - name: Set up JDK 21
+      - name: Set up JDK
         uses: actions/setup-java@v4
         with:
           java-version: ${{ env.JAVA_VERSION }}
@@ -82,13 +82,9 @@ jobs:
             --document-name "AWS-RunShellScript" \
             --parameters 'commands=[
               "cd /home/ec2-user/team-profile-api",
-              "# 이전 컨테이너 및 이미지 삭제",
               "docker compose -f docker-compose.prod.yml down || true",
               "docker image prune -f",
-              "# 환경 변수 파일 생성",
-              "echo DOCKER_USER=${{ secrets.DOCKER_USERNAME }} > .env.deploy",
-              "echo IMAGE_TAG='$IMAGE_TAG' >> .env.deploy",
-              "# 새 이미지 pull 및 컨테이너 실행",
+              "cat > .env.deploy <<EOF\nDOCKER_USER=${{ secrets.DOCKER_USERNAME }}\nIMAGE_TAG=$IMAGE_TAG\nEOF",
               "docker compose --env-file .env.deploy -f docker-compose.prod.yml up -d"
             ]' \
             --query "Command.CommandId" \
